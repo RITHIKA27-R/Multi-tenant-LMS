@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details - Multi-Tenant LMS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div class="user-info">
+                <div class="avatar" id="avatar"></div>
+                <div class="user-details">
+                    <h2 id="username"></h2>
+                    <p id="tenant"></p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+                <button class="btn-logout" onclick="logout()">Sign Out</button>
+            </div>
+        </div>
+
+        <div id="courseHeader" class="course-header">
+            <h1 id="courseTitle">Loading...</h1>
+            <p id="courseDescription"></p>
+        </div>
+
+        <div class="section-header">
+            <h2>Assessments</h2>
+        </div>
+
+        <div id="assessmentsContainer">
+            <div class="empty-state">
+                <h3>Loading assessments...</h3>
+            </div>
+        </div>
+    </div>
+    <script src="course-details.js"></script>
+</body>
+
+</html>

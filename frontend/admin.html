@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Multi-Tenant LMS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <div class="user-info">
+                <div class="avatar" id="avatar"></div>
+                <div class="user-details">
+                    <h2 id="username"></h2>
+                    <p id="tenant"></p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Dashboard</button>
+                <button class="btn-logout" onclick="logout()">Sign Out</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('courses')">Courses</button>
+            <button class="tab-btn" onclick="showTab('assessments')">Assessments</button>
+            <button class="tab-btn" onclick="showTab('users')">Users</button>
+            <button class="tab-btn" onclick="showTab('grading')">Grading</button>
+        </div>
+
+        <div id="statsGrid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+            <div class="card"
+                style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
+                <h4 style="margin: 0; color: #667eea;">Total Courses</h4>
+                <h2 id="statCourses" style="margin: 10px 0; font-size: 32px;">0</h2>
+            </div>
+            <div class="card"
+                style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
+                <h4 style="margin: 0; color: #667eea;">Students</h4>
+                <h2 id="statUsers" style="margin: 10px 0; font-size: 32px;">0</h2>
+            </div>
+            <div class="card"
+                style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
+                <h4 style="margin: 0; color: #667eea;">Pending Grades</h4>
+                <h2 id="statGrades" style="margin: 10px 0; font-size: 32px;">0</h2>
+            </div>
+        </div>
+
+        <!-- Courses Tab -->
+        <div id="coursesTab" class="tab-content active">
+            <div class="section-header">
+                <h2>Manage Courses</h2>
+                <button class="btn-primary" onclick="showCourseForm()">
+                    <span>+ Create Course</span>
+                </button>
+            </div>
+
+            <div id="courseForm" class="form-container" style="display: none;">
+                <h3>Create New Course</h3>
+                <form id="createCourseForm">
+                    <div class="form-group">
+                        <label>Course Title</label>
+                        <input type="text" id="courseTitle" required placeholder="e.g., Introduction to Programming">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="courseDescription" rows="4" required
+                            placeholder="Course description..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="btn-primary">Create Course</button>
+                        <button type="button" class="btn-secondary" onclick="hideCourseForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="coursesList" class="admin-list"></div>
+        </div>
+
+        <!-- Assessments Tab -->
+        <div id="assessmentsTab" class="tab-content">
+            <div class="section-header">
+                <h2>Manage Assessments</h2>
+                <button class="btn-primary" onclick="showAssessmentForm()">
+                    <span>+ Create Assessment</span>
+                </button>
+            </div>
+
+            <div id="assessmentForm" class="form-container" style="display: none;">
+                <h3>Create New Assessment</h3>
+                <form id="createAssessmentForm">
+                    <div class="form-group">
+                        <label>Assessment Title</label>
+                        <input type="text" id="assessmentTitle" required placeholder="e.g., Midterm Exam">
+                    </div>
+                    <div class="form-group">
+                        <label>Course</label>
+                        <select id="assessmentCourse" required>
+                            <option value="">Select a course...</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="btn-primary">Create Assessment</button>
+                        <button type="button" class="btn-secondary" onclick="hideAssessmentForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="assessmentsList" class="admin-list"></div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="usersTab" class="tab-content">
+            <div class="section-header">
+                <h2>Manage Users</h2>
+                <button class="btn-primary" onclick="showUserForm()">
+                    <span>+ Create User</span>
+                </button>
+            </div>
+
+            <div id="userForm" class="form-container" style="display: none;">
+                <h3>Create New User</h3>
+                <form id="createUserForm">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="newUsername" required placeholder="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="newEmail" required placeholder="user@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="newPassword" required placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="newRole" required>
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="btn-primary">Create User</button>
+                        <button type="button" class="btn-secondary" onclick="hideUserForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="usersList" class="admin-list"></div>
+        </div>
+
+        <!-- Grading Tab -->
+        <div id="gradingTab" class="tab-content">
+            <div class="section-header">
+                <h2>Pending Assessments</h2>
+            </div>
+            <div id="gradingList" class="admin-list">
+                <div class="empty-state">
+                    <h3>No Submissions Yet</h3>
+                    <p>Assessment submissions will appear here for grading</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

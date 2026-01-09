@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # 🗄️ MySQL Database
+  lms-db:
+    image: mysql:8.0
+    container_name: lms-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+  # 🔍 Discovery Server (Eureka)
+  discovery-server:
+    build: ./discovery-server
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  # 🛡️ API Gateway
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  # 👤 User Service
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    depends_on:
+      lms-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lms-db:3306/lms_user_db?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  # 📚 Course Service
+  course-service:
+    build: ./course-service
+    container_name: course-service
+    depends_on:
+      lms-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lms-db:3306/lms_course_db?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  # 📝 Assessment Service
+  assessment-service:
+    build: ./assessment-service
+    container_name: assessment-service
+    depends_on:
+      lms-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lms-db:3306/lms_assessment_db?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  # 🔔 Notification Service
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    depends_on:
+      lms-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lms-db:3306/lms_notification_db?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  # 🕒 Attendance Service
+  attendance-service:
+    build: ./attendance-service
+    container_name: attendance-service
+    depends_on:
+      lms-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lms-db:3306/lms_attendance_db?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  # 📅 Leave Service
+  leave-service:
+    build: ./leave-service
+    container_name: leave-service
+    depends_on:
+      lms-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lms-db:3306/lms_leave_db?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/

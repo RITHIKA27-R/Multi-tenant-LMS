@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Assessment - Multi-Tenant LMS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div class="user-info">
+                <div class="avatar" id="avatar"></div>
+                <div class="user-details">
+                    <h2 id="username"></h2>
+                    <p id="tenant"></p>
+                </div>
+            </div>
+            <button class="btn-logout" onclick="logout()">Sign Out</button>
+        </div>
+
+        <div id="assessmentContent">
+            <div class="course-header">
+                <h1 id="assessmentTitle">Loading Assessment...</h1>
+                <p>Please answer all questions carefully.</p>
+            </div>
+
+            <div id="quizContainer">
+                <div class="question-container">
+                    <p class="question-number">Question 1</p>
+                    <p class="question-text">This is a sample question for this assessment. (Coming soon: Actual
+                        questions from backend)</p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="A">
+                            <span>Option A</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="B">
+                            <span>Option B</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="C">
+                            <span>Option C</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="D">
+                            <span>Option D</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="submit-assessment" onclick="submitAssessment()">Submit Assessment</button>
+            </div>
+        </div>
+
+        <div id="resultContainer" style="display: none;">
+            <div class="score-card">
+                <h2 id="finalScore">75%</h2>
+                <p>Your Assessment Result</p>
+            </div>
+            <div class="feedback-section">
+                <h3>Feedback</h3>
+                <div class="feedback-item correct">
+                    <strong>Great job!</strong> You have successfully completed this assessment.
+                </div>
+                <button class="btn-primary" style="width: 100%; margin-top: 20px;"
+                    onclick="window.location.href='dashboard.html'">Return to Dashboard</button>
+            </div>
+        </div>
+    </div>
+    <script src="take-assessment.js"></script>
+</body>
+
+</html>

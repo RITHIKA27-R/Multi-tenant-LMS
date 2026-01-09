@@ -1,0 +1,105 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+
+        # USER SERVICE (PUBLIC AUTH APIs)
+        - id: user-auth
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        # USER SERVICE (TENANTS)
+        - id: user-tenants
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/tenants/**
+          filters:
+            - AuthenticationFilter
+
+        # USER SERVICE (SUPER ADMIN)
+        - id: super-admin
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/super-admin/**
+          filters:
+            - AuthenticationFilter
+
+        # USER SERVICE (PROTECTED APIs)
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+          filters:
+            - AuthenticationFilter
+
+        # USER SERVICE (SECURITY MODULE)
+        - id: user-security
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/security/**
+          filters:
+            - AuthenticationFilter
+
+        # COURSE SERVICE
+        - id: course-service
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path=/courses/**
+          filters:
+            - AuthenticationFilter
+
+        # ASSESSMENT SERVICE
+        - id: assessment-service
+          uri: lb://ASSESSMENT-SERVICE
+          predicates:
+            - Path=/assessments/**
+          filters:
+            - AuthenticationFilter
+
+        # NOTIFICATION SERVICE
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/notifications/**
+          filters:
+            - AuthenticationFilter
+
+        # ATTENDANCE SERVICE
+        - id: attendance-service
+          uri: lb://ATTENDANCE-SERVICE
+          predicates:
+            - Path=/attendance/**
+          filters:
+            - AuthenticationFilter
+
+        # LEAVE SERVICE
+        - id: leave-service
+          uri: lb://LEAVE-SERVICE
+          predicates:
+            - Path=/leaves/**
+          filters:
+            - AuthenticationFilter
+
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

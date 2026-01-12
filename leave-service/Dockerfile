@@ -2,12 +2,13 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+COPY leave-service/pom.xml leave-service/
+COPY leave-service/src leave-service/src
+RUN mvn -pl leave-service clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/leave-service/target/*.jar app.jar
 EXPOSE 8086
 ENTRYPOINT ["java", "-jar", "app.jar"]

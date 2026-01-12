@@ -10,8 +10,8 @@ services:
   - type: web
     name: discovery-server
     env: docker
-    dockerContext: discovery-server
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: discovery-server/Dockerfile
     plan: free
     healthCheckPath: /actuator/health
     envVars:
@@ -22,8 +22,8 @@ services:
   - type: web
     name: api-gateway
     env: docker
-    dockerContext: api-gateway
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: api-gateway/Dockerfile
     plan: free
     healthCheckPath: /actuator/health
     envVars:
@@ -36,8 +36,8 @@ services:
   - type: web
     name: user-service
     env: docker
-    dockerContext: user-service
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: user-service/Dockerfile
     plan: free
     envVars:
       - key: SPRING_DATASOURCE_URL
@@ -57,8 +57,8 @@ services:
   - type: web
     name: course-service
     env: docker
-    dockerContext: course-service
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: course-service/Dockerfile
     plan: free
     envVars:
       - key: SPRING_DATASOURCE_URL
@@ -78,8 +78,8 @@ services:
   - type: web
     name: assessment-service
     env: docker
-    dockerContext: assessment-service
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: assessment-service/Dockerfile
     plan: free
     envVars:
       - key: SPRING_DATASOURCE_URL
@@ -99,8 +99,8 @@ services:
   - type: web
     name: notification-service
     env: docker
-    dockerContext: notification-service
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: notification-service/Dockerfile
     plan: free
     envVars:
       - key: SPRING_DATASOURCE_URL
@@ -120,8 +120,8 @@ services:
   - type: web
     name: attendance-service
     env: docker
-    dockerContext: attendance-service
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: attendance-service/Dockerfile
     plan: free
     envVars:
       - key: SPRING_DATASOURCE_URL
@@ -141,8 +141,8 @@ services:
   - type: web
     name: leave-service
     env: docker
-    dockerContext: leave-service
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: leave-service/Dockerfile
     plan: free
     envVars:
       - key: SPRING_DATASOURCE_URL
@@ -162,8 +162,8 @@ services:
   - type: web
     name: frontend-react
     env: docker
-    dockerContext: frontend-react
-    dockerfilePath: Dockerfile
+    dockerContext: .
+    dockerfilePath: frontend-react/Dockerfile
     plan: free
     envVars:
       - key: VITE_API_BASE_URL

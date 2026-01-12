@@ -2,12 +2,13 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+COPY notification-service/pom.xml notification-service/
+COPY notification-service/src notification-service/src
+RUN mvn -pl notification-service clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/notification-service/target/*.jar app.jar
 EXPOSE 8084
 ENTRYPOINT ["java", "-jar", "app.jar"]

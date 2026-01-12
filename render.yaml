@@ -1,6 +1,6 @@
 services:
   # MySQL Database - Now as a Private Service
-  - type: pvt
+  - type: private_service
     name: lms-db
     env: docker
     dockerContext: .
@@ -13,7 +13,7 @@ services:
         value: lms_main
 
   # Discovery Server (Eureka)
-  - type: pvt
+  - type: private_service
     name: discovery-server
     env: docker
     dockerContext: .
@@ -42,7 +42,7 @@ services:
         value: docker
 
   # User Service
-  - type: pvt
+  - type: private_service
     name: user-service
     env: docker
     dockerContext: .

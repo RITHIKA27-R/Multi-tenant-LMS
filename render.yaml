@@ -1,6 +1,6 @@
 services:
-  # MySQL Database - Now as a Private Service
-  - type: private_service
+  # MySQL Database - Now as a Private Service (pserv)
+  - type: pserv
     name: lms-db
     env: docker
     dockerContext: .
@@ -13,7 +13,7 @@ services:
         value: lms_main
 
   # Discovery Server (Eureka)
-  - type: private_service
+  - type: pserv
     name: discovery-server
     env: docker
     dockerContext: .
@@ -25,7 +25,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # API Gateway
+  # API Gateway - PUBLIC WEB SERVICE
   - type: web
     name: api-gateway
     env: docker
@@ -42,7 +42,7 @@ services:
         value: docker
 
   # User Service
-  - type: private_service
+  - type: pserv
     name: user-service
     env: docker
     dockerContext: .
@@ -62,7 +62,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # Frontend (React)
+  # Frontend (React) - PUBLIC WEB SERVICE
   - type: web
     name: frontend-react
     env: docker

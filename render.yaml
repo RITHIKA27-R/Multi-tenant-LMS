@@ -1,5 +1,5 @@
 services:
-  # MySQL Database - Now as a Private Service (pserv)
+  # MySQL Database
   - type: pserv
     name: lms-db
     env: docker
@@ -25,7 +25,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # API Gateway - PUBLIC WEB SERVICE
+  # API Gateway
   - type: web
     name: api-gateway
     env: docker
@@ -62,16 +62,16 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # Frontend (React) - PUBLIC WEB SERVICE
+  # Frontend (React)
   - type: web
     name: frontend-react
     env: docker
     dockerContext: .
     dockerfilePath: frontend-react/Dockerfile
     plan: free
+    # We pass the Gateway URL so React knows where to send requests
+    dockerBuildArgs:
+      VITE_API_BASE_URL: https://api-gateway.onrender.com
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          name: api-gateway
-          type: web
-          property: host
+        value: https://api-gateway.onrender.com

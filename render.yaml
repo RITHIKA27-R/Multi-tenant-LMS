@@ -28,6 +28,8 @@ services:
     plan: free
     healthCheckPath: /actuator/health
     envVars:
+      - key: PORT
+        value: 8080
       - key: EUREKA_SERVER_URL
         value: http://discovery-server:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
@@ -56,6 +58,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
+  # ... (rest of services follow this pattern)
   # Course Service - PRIVATE
   - type: pvt
     name: course-service
@@ -79,7 +82,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # Assessment Service - PRIVATE
+  # Assessment Service
   - type: pvt
     name: assessment-service
     env: docker
@@ -102,7 +105,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # Notification Service - PRIVATE
+  # Notification Service
   - type: pvt
     name: notification-service
     env: docker
@@ -125,7 +128,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # Attendance Service - PRIVATE
+  # Attendance Service
   - type: pvt
     name: attendance-service
     env: docker
@@ -148,7 +151,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # Leave Service - PRIVATE
+  # Leave Service
   - type: pvt
     name: leave-service
     env: docker
@@ -171,7 +174,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # Frontend (React) - PUBLIC
+  # Frontend (React)
   - type: web
     name: frontend-react
     env: docker

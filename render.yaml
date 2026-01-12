@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: api-gateway
+    env: docker
+    dockerfilePath: ./api-gateway/Dockerfile
+    plan: free
+
+  - type: pserv
+    name: mysql-db
+    env: docker
+    dockerfilePath: ./database/Dockerfile
+    plan: free

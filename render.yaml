@@ -1,29 +1,29 @@
 services:
-  # MySQL Database
-  - type: database
-    name: lms_db
-    databaseName: lms_main
-    user: root
+  # MySQL Database - Now as a Private Service
+  - type: pvt
+    name: lms-db
+    env: docker
+    dockerContext: .
+    dockerfilePath: db.Dockerfile
     plan: free
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: root
+      - key: MYSQL_DATABASE
+        value: lms_main
 
   # Discovery Server (Eureka)
-  - type: web
+  - type: pvt
     name: discovery-server
     env: docker
     dockerContext: .
     dockerfilePath: discovery-server/Dockerfile
     plan: free
-    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8761
       - key: SPRING_PROFILES_ACTIVE
         value: docker
-      # Ensure Eureka doesn't try to register with itself
-      - key: EUREKA_CLIENT_REGISTER_WITH_EUREKA
-        value: "false"
-      - key: EUREKA_CLIENT_FETCH_REGISTRY
-        value: "false"
 
   # API Gateway
   - type: web
@@ -42,30 +42,26 @@ services:
         value: docker
 
   # User Service
-  - type: web
+  - type: pvt
     name: user-service
     env: docker
     dockerContext: .
     dockerfilePath: user-service/Dockerfile
     plan: free
-    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8081
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://lms_db:3306/lms_user_db?createDatabaseIfNotExist=true
+        value: jdbc:mysql://lms-db:3306/lms_user_db?createDatabaseIfNotExist=true
       - key: SPRING_DATASOURCE_USERNAME
         value: root
       - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: lms_db
-          property: password
+        value: root
       - key: EUREKA_SERVER_URL
         value: http://discovery-server:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # ... (I will keep the rest of the services consistent)
   # Frontend (React)
   - type: web
     name: frontend-react

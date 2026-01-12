@@ -6,20 +6,21 @@ services:
     user: root
     plan: free
 
-  # Discovery Server (Eureka) - PRIVATE
-  - type: pvt
+  # Discovery Server (Eureka)
+  - type: web
     name: discovery-server
     env: docker
     dockerContext: .
     dockerfilePath: discovery-server/Dockerfile
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8761
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # API Gateway - PUBLIC
+  # API Gateway
   - type: web
     name: api-gateway
     env: docker
@@ -35,13 +36,14 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # User Service - PRIVATE
-  - type: pvt
+  # User Service
+  - type: web
     name: user-service
     env: docker
     dockerContext: .
     dockerfilePath: user-service/Dockerfile
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8081
@@ -58,14 +60,14 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
-  # ... (rest of services follow this pattern)
-  # Course Service - PRIVATE
-  - type: pvt
+  # Course Service
+  - type: web
     name: course-service
     env: docker
     dockerContext: .
     dockerfilePath: course-service/Dockerfile
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8082
@@ -83,12 +85,13 @@ services:
         value: docker
 
   # Assessment Service
-  - type: pvt
+  - type: web
     name: assessment-service
     env: docker
     dockerContext: .
     dockerfilePath: assessment-service/Dockerfile
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8083
@@ -106,12 +109,13 @@ services:
         value: docker
 
   # Notification Service
-  - type: pvt
+  - type: web
     name: notification-service
     env: docker
     dockerContext: .
     dockerfilePath: notification-service/Dockerfile
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8084
@@ -129,12 +133,13 @@ services:
         value: docker
 
   # Attendance Service
-  - type: pvt
+  - type: web
     name: attendance-service
     env: docker
     dockerContext: .
     dockerfilePath: attendance-service/Dockerfile
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8085
@@ -152,12 +157,13 @@ services:
         value: docker
 
   # Leave Service
-  - type: pvt
+  - type: web
     name: leave-service
     env: docker
     dockerContext: .
     dockerfilePath: leave-service/Dockerfile
     plan: free
+    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8086

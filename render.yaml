@@ -1,27 +1,173 @@
 services:
+  # MySQL Database
+  - type: database
+    name: lms_db
+    databaseName: lms_main
+    user: root
+    plan: free
+
+  # Discovery Server (Eureka)
+  - type: web
+    name: discovery-server
+    env: docker
+    dockerContext: discovery-server
+    dockerfilePath: Dockerfile
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+
+  # API Gateway
   - type: web
     name: api-gateway
     env: docker
-    dockerfilePath: ./api-gateway/Dockerfile
+    dockerContext: api-gateway
+    dockerfilePath: Dockerfile
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: http://discovery-server:8761/eureka/
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+
+  # User Service
+  - type: web
+    name: user-service
+    env: docker
+    dockerContext: user-service
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
-      - key: DB_HOST
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://lms_db:3306/lms_user_db?createDatabaseIfNotExist=true
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
         fromDatabase:
-          name: lms-db
-          property: host
-      - key: DB_NAME
-        fromDatabase:
-          name: lms-db
-          property: database
-      - key: DB_USER
-        fromDatabase:
-          name: lms-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: lms-db
+          name: lms_db
           property: password
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: http://discovery-server:8761/eureka/
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
 
-databases:
-  - name: lms-db
+  # Course Service
+  - type: web
+    name: course-service
+    env: docker
+    dockerContext: course-service
+    dockerfilePath: Dockerfile
     plan: free
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://lms_db:3306/lms_course_db?createDatabaseIfNotExist=true
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: lms_db
+          property: password
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: http://discovery-server:8761/eureka/
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+
+  # Assessment Service
+  - type: web
+    name: assessment-service
+    env: docker
+    dockerContext: assessment-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://lms_db:3306/lms_assessment_db?createDatabaseIfNotExist=true
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: lms_db
+          property: password
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: http://discovery-server:8761/eureka/
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+
+  # Notification Service
+  - type: web
+    name: notification-service
+    env: docker
+    dockerContext: notification-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://lms_db:3306/lms_notification_db?createDatabaseIfNotExist=true
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: lms_db
+          property: password
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: http://discovery-server:8761/eureka/
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+
+  # Attendance Service
+  - type: web
+    name: attendance-service
+    env: docker
+    dockerContext: attendance-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://lms_db:3306/lms_attendance_db?createDatabaseIfNotExist=true
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: lms_db
+          property: password
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: http://discovery-server:8761/eureka/
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+
+  # Leave Service
+  - type: web
+    name: leave-service
+    env: docker
+    dockerContext: leave-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://lms_db:3306/lms_leave_db?createDatabaseIfNotExist=true
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: lms_db
+          property: password
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: http://discovery-server:8761/eureka/
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+
+  # Frontend (React)
+  - type: web
+    name: frontend-react
+    env: docker
+    dockerContext: frontend-react
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          name: api-gateway
+          type: web
+          property: host

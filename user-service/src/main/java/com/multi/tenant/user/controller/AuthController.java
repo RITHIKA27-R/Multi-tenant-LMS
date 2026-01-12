@@ -21,6 +21,11 @@ public class AuthController {
         return authService.login(request.getEmail(), request.getPassword(), ipAddress);
     }
 
+    @PostMapping("/register")
+    public String register(@RequestBody AuthRequest request) {
+        return authService.register(request.getEmail(), request.getPassword());
+    }
+
     @GetMapping("/lookup")
     public Long lookupTenant(@RequestParam("email") String email) {
         return authService.getTenantIdByEmail(email);

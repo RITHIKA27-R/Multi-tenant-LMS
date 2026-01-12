@@ -1,12 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { Award, Download, Share2 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 const LearnerCertificates = () => {
-    // Mock data
-    const certificates = [
-        { id: 101, title: 'Java Programming Masterclass', date: '2023-11-15', score: '92%', instructor: 'Alice Smith', recipient: 'Rithika R' },
-        { id: 102, title: 'Introduction to Cloud Computing', date: '2023-10-05', score: '100%', instructor: 'Bob Jones', recipient: 'Rithika R' }
-    ];
+    // State for certificates
+    const [certificates, setCertificates] = useState([]);
+    const { user } = useAuth(); // Get current user for the certificate name
+
+    useEffect(() => {
+        // In a real app, this comes from the backend.
+        // For now, we simulate this by checking a "completedCourses" item in local storage
+        // combined with the Mock Course Data to get titles.
+
+        const completedCourseIds = JSON.parse(localStorage.getItem('completedCourses') || '[]');
+
+        // Mock Catalog to get titles (copied from CourseCatalog for consistency in simulation)
+        const COURSE_CATALOG = [
+            { id: 1, title: 'Java Basics', instructor: 'Bob Smith' },
+            { id: 2, title: 'Advanced React', instructor: 'Alice Doe' },
+            { id: 3, title: 'UI/UX Design Principles', instructor: 'John Lee' },
+            { id: 4, title: 'Spring Boot Mastery', instructor: 'Bob Smith' },
+            { id: 5, title: 'HTML & CSS Fundamentals', instructor: 'Sarah Johnson' },
+        ];
+
+        const myCertificates = completedCourseIds.map(id => {
+            const course = COURSE_CATALOG.find(c => c.id === id);
+            return {
+                id: id,
+                title: course ? course.title : 'Unknown Course',
+                date: new Date().toLocaleDateString(), // Simulating completion date as today
+                score: '100%', // Simulating perfect score
+                instructor: course ? course.instructor : 'Multi-Tenant LMS',
+                recipient: user?.username || 'Learner'
+            };
+        });
+
+        setCertificates(myCertificates);
+    }, [user]);
 
     const handleDownload = (cert) => {
         const printWindow = window.open('', '', 'width=800,height=600');

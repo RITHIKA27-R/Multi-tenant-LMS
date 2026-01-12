@@ -7,6 +7,7 @@ const MOCK_ALL_COURSES = [
     { id: 2, title: 'Advanced React', progress: 0, nextLesson: 'Getting Started' },
     { id: 3, title: 'UI/UX Design Principles', progress: 5, nextLesson: 'Design Thinking' },
     { id: 4, title: 'Spring Boot Mastery', progress: 0, nextLesson: 'Why Spring Boot?' },
+    { id: 5, title: 'HTML & CSS Fundamentals', progress: 0, nextLesson: 'HTML Basics' },
 ];
 
 const MyCourses = () => {

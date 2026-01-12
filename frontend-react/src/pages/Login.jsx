@@ -8,6 +8,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [isSignUp, setIsSignUp] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -16,13 +17,17 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:8080/auth/login', {
+            const endpoint = isSignUp ? 'http://localhost:8080/auth/register' : 'http://localhost:8080/auth/login';
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: username, password }) // Changed username to email
             });
 
-            if (!response.ok) throw new Error('Invalid credentials');
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || 'Invalid credentials');
+            }
 
             const token = await response.text();
             login(token, username);
@@ -40,10 +45,12 @@ const Login = () => {
             }, 100);
         } catch (err) {
             console.error('Login error:', err);
-            if (err.message === 'Invalid credentials') {
-                setError('Invalid credentials. Please try again.');
+            // If it's a fetch error (network issue), the message is usually 'Failed to fetch'
+            if (err.message === 'Failed to fetch' || err.message === 'NetworkError received') {
+                setError('Connection error. Please ensure the backend services (port 8080) are running.');
             } else {
-                setError('Connection error. Please ensure the backend services (port 8080/8081) are running.');
+                // Show the specific error from data (e.g. "User with this email already exists", "Invalid credentials")
+                setError(err.message);
             }
         }
     };
@@ -68,8 +75,12 @@ const Login = () => {
                     }}>
                         <ShieldCheck size={32} />
                     </div>
-                    <h1 style={{ fontSize: '28px', marginBottom: '8px' }}>Welcome Back</h1>
-                    <p style={{ color: 'var(--text-secondary)' }}>Sign in to your learning portal</p>
+                    <h1 style={{ fontSize: '28px', marginBottom: '8px' }}>
+                        {isSignUp ? 'Create Account' : 'Welcome Back'}
+                    </h1>
+                    <p style={{ color: 'var(--text-secondary)' }}>
+                        {isSignUp ? 'Sign up to get started' : 'Sign in to your learning portal'}
+                    </p>
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -97,9 +108,21 @@ const Login = () => {
                     </div>
 
                     <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-                        <LogIn size={20} />
-                        <span>Sign In</span>
+                        {isSignUp ? <LogIn size={20} /> : <LogIn size={20} />}
+                        <span>{isSignUp ? 'Sign Up' : 'Sign In'}</span>
                     </button>
+
+                    <div style={{ marginTop: '16px', textAlign: 'center' }}>
+                        <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+                            {isSignUp ? 'Already have an account? ' : 'Don\'t have an account? '}
+                            <span
+                                onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
+                                style={{ color: 'var(--primary)', cursor: 'pointer', fontWeight: '600' }}
+                            >
+                                {isSignUp ? 'Sign In' : 'Sign Up'}
+                            </span>
+                        </p>
+                    </div>
                 </form>
 
                 {error && (

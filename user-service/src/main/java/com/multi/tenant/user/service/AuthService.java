@@ -99,4 +99,24 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
         return user.getTenantId();
     }
+
+    public String register(String email, String password) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("User with this email already exists");
+        }
+
+        User user = new User();
+        user.setEmail(email);
+        user.setUsername(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRole("LEARNER");
+        user.setTenantId(1L); // Defaulting to Tenant 1 for self-registration
+        user.setStatus("ACTIVE");
+        user.setFailedLoginAttempts(0);
+
+        userRepository.save(user);
+
+        System.out.println("User registered successfully: " + email);
+        return jwtUtil.generateToken(user.getUsername(), user.getRole(), user.getTenantId());
+    }
 }

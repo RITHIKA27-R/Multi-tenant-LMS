@@ -2,9 +2,10 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 COPY pom.xml .
-COPY notification-service/pom.xml notification-service/
-COPY notification-service/src notification-service/src
-RUN mvn -pl notification-service clean package -DskipTests
+WORKDIR /app/notification-service
+COPY notification-service/pom.xml .
+COPY notification-service/src ./src
+RUN mvn clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine

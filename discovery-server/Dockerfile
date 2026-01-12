@@ -1,10 +1,13 @@
 # Build stage
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
+# Copy the parent pom first
 COPY pom.xml .
-COPY discovery-server/pom.xml discovery-server/
-COPY discovery-server/src discovery-server/src
-RUN mvn -pl discovery-server clean package -DskipTests
+# Move into service directory
+WORKDIR /app/discovery-server
+COPY discovery-server/pom.xml .
+COPY discovery-server/src ./src
+RUN mvn clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine

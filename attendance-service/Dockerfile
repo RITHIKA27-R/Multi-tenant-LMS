@@ -2,9 +2,10 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 COPY pom.xml .
-COPY attendance-service/pom.xml attendance-service/
-COPY attendance-service/src attendance-service/src
-RUN mvn -pl attendance-service clean package -DskipTests
+WORKDIR /app/attendance-service
+COPY attendance-service/pom.xml .
+COPY attendance-service/src ./src
+RUN mvn clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine

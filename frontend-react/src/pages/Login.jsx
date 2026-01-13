@@ -49,7 +49,7 @@ const Login = () => {
             console.error('Login error:', err);
             // If it's a fetch error (network issue), the message is usually 'Failed to fetch'
             if (err.message === 'Failed to fetch' || err.message === 'NetworkError received') {
-                setError('Connection error. Please ensure the backend services (port 8080) are running.');
+                setError('Connection error. Please ensure the backend services are running and the API URL is correct.');
             } else {
                 // Show the specific error from data (e.g. "User with this email already exists", "Invalid credentials")
                 setError(err.message);

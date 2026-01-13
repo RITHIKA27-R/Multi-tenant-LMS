@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { KeyRound, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config';
 
 const SetPassword = () => {
     const [searchParams] = useSearchParams();
@@ -19,7 +20,7 @@ const SetPassword = () => {
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8080/auth/set-password', {
+            const response = await fetch(`${API_BASE_URL}/auth/set-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token, password })

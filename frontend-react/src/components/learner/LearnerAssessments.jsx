@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { CheckCircle, XCircle, Clock, Play } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 const LearnerAssessments = () => {
     const { token, user } = useAuth();
@@ -20,7 +21,7 @@ const LearnerAssessments = () => {
     const handleStart = async (testId) => {
         try {
             // Simulate API call or real call
-            // const res = await fetch(`http://localhost:8080/assessments/${testId}/start`, {
+            // const res = await fetch(`${API_BASE_URL}/assessments/${testId}/start`, {
             //    method: 'POST', 
             //    headers: { 'Authorization': `Bearer ${token}` }
             // });

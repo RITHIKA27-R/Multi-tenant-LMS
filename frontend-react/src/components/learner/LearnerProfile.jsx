@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User, Bell, Lock, Key, X, CheckCircle, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE_URL } from '../../config';
 
 const LearnerProfile = () => {
     const { user, token } = useAuth();
@@ -38,7 +39,7 @@ const LearnerProfile = () => {
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8080/users/change-password', {
+            const response = await fetch(`${API_BASE_URL}/users/change-password`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

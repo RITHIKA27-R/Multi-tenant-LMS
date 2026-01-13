@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { BookOpen, ChevronRight, ArrowLeft, Clock, User, BarChart, Tag, Lock, CheckCircle, Loader } from 'lucide-react';
 
+import { API_BASE_URL } from '../config';
+
 const MOCK_COURSES = [
     { id: 1, title: 'Java Basics', category: 'Programming', level: 'Beginner', duration: '4 Weeks', instructor: 'Bob Smith', image: '#667eea', description: 'Learn the fundamentals of Java programming, from variables to object-oriented concepts.' },
     { id: 2, title: 'Advanced React', category: 'Frontend', level: 'Advanced', duration: '6 Weeks', instructor: 'Alice Doe', image: '#ed8936', description: 'Deep dive into React hooks, state management patterns, and performance optimization.' },
@@ -24,8 +26,8 @@ const CourseDetails = () => {
             try {
                 const headers = { 'Authorization': `Bearer ${token}` };
                 const [cRes, aRes] = await Promise.all([
-                    fetch(`http://localhost:8080/courses/${id}`, { headers }),
-                    fetch(`http://localhost:8080/assessments`, { headers })
+                    fetch(`${API_BASE_URL}/courses/${id}`, { headers }),
+                    fetch(`${API_BASE_URL}/assessments`, { headers })
                 ]);
 
                 if (cRes.ok) {

@@ -31,6 +31,8 @@ const activeUserData = [
     { day: 'Sun', users: 70 },
 ];
 
+import { API_BASE_URL } from '../config';
+
 const SuperAdminDashboard = () => {
     const { token, logout } = useAuth();
     const [stats, setStats] = useState({
@@ -43,7 +45,7 @@ const SuperAdminDashboard = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await fetch('http://localhost:8080/super-admin/stats', {
+                const res = await fetch(`${API_BASE_URL}/super-admin/stats`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) {

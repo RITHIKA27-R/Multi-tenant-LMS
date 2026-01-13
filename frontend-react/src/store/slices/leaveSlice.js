@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config';
 
-const API_BASE = 'http://localhost:8080/leaves';
+const API_BASE = `${API_BASE_URL}/leaves`;
 
 export const applyForLeave = createAsyncThunk(
     'leave/apply',

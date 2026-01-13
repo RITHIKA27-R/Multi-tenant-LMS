@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { API_BASE_URL } from '../config';
+
 const SupportTickets = () => {
     const { token } = useAuth();
     const [tickets, setTickets] = useState([]);
@@ -49,7 +51,7 @@ const SupportTickets = () => {
 
     const fetchTickets = async () => {
         try {
-            const res = await fetch('http://localhost:8080/super-admin/tickets', {
+            const res = await fetch(`${API_BASE_URL}/super-admin/tickets`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
@@ -62,7 +64,7 @@ const SupportTickets = () => {
     const handleCreateTicket = async (e) => {
         e.preventDefault();
         try {
-            await fetch('http://localhost:8080/super-admin/tickets', {
+            await fetch(`${API_BASE_URL}/super-admin/tickets`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -80,7 +82,7 @@ const SupportTickets = () => {
 
     const handleStatusUpdate = async (ticketId, newStatus) => {
         try {
-            await fetch(`http://localhost:8080/super-admin/tickets/${ticketId}/status?status=${newStatus}`, {
+            await fetch(`${API_BASE_URL}/super-admin/tickets/${ticketId}/status?status=${newStatus}`, {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { LogIn, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+import { API_BASE_URL } from '../config';
+
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +19,7 @@ const Login = () => {
         setError('');
 
         try {
-            const endpoint = isSignUp ? 'http://localhost:8080/auth/register' : 'http://localhost:8080/auth/login';
+            const endpoint = isSignUp ? `${API_BASE_URL}/auth/register` : `${API_BASE_URL}/auth/login`;
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

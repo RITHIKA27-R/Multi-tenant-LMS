@@ -4,6 +4,8 @@ import { Shield, Activity, Globe, Lock, Users, AlertTriangle, Plus, Trash2, Sear
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 
+import { API_BASE_URL } from '../config';
+
 const Security = () => {
     const { token } = useAuth();
     const [activeTab, setActiveTab] = useState('audit');
@@ -24,22 +26,19 @@ const Security = () => {
             const headers = { 'Authorization': `Bearer ${token}` };
 
             if (activeTab === 'audit') {
-                const res = await fetch('http://localhost:8080/security/audit-logs', { headers });
+                const res = await fetch(`${API_BASE_URL}/security/audit-logs`, { headers });
                 if (res.ok) {
                     const data = await res.json();
-                    // Show recent logs first (Assuming API returns chronological order, we reverse it)
-                    // If API returns newest first, we don't need to reverse. But usually logs are appended.
-                    // To be safe, if we have timestamps, sorting is better.
                     if (Array.isArray(data)) {
                         const sorted = data.sort((a, b) => new Date(b.loginTime) - new Date(a.loginTime));
                         setAuditLogs(sorted);
                     }
                 }
             } else if (activeTab === 'ip') {
-                const res = await fetch('http://localhost:8080/security/ip-restrictions', { headers });
+                const res = await fetch(`${API_BASE_URL}/security/ip-restrictions`, { headers });
                 if (res.ok) setIpRestrictions(await res.json());
             } else if (activeTab === 'roles') {
-                const res = await fetch('http://localhost:8080/security/permissions', { headers });
+                const res = await fetch(`${API_BASE_URL}/security/permissions`, { headers });
                 if (res.ok) setPermissions(await res.json());
             }
         } catch (error) {
@@ -52,7 +51,7 @@ const Security = () => {
     const handleAddIp = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:8080/security/ip-restrictions', {
+            const res = await fetch(`${API_BASE_URL}/security/ip-restrictions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,7 +70,7 @@ const Security = () => {
 
     const handleDeleteIp = async (id) => {
         try {
-            await fetch(`http://localhost:8080/security/ip-restrictions/${id}`, {
+            await fetch(`${API_BASE_URL}/security/ip-restrictions/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

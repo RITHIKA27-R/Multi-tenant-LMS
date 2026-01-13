@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { UserPlus, Mail, Shield, UserX, RefreshCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+import { API_BASE_URL } from '../config';
+
 const TenantAdminManagement = () => {
     const { token } = useAuth();
     const [admins, setAdmins] = useState([]);
@@ -12,13 +14,13 @@ const TenantAdminManagement = () => {
     const [inviteData, setInviteData] = useState({ email: '', tenantId: '' });
 
     useEffect(() => {
-        fetch('http://localhost:8080/super-admin/admins', {
+        fetch(`${API_BASE_URL}/super-admin/admins`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())
             .then(data => setAdmins(data));
 
-        fetch('http://localhost:8080/tenants', {
+        fetch(`${API_BASE_URL}/tenants`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())
@@ -28,7 +30,7 @@ const TenantAdminManagement = () => {
     const handleInvite = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`http://localhost:8080/tenants/${inviteData.tenantId}/invite-admin`, {
+            const res = await fetch(`${API_BASE_URL}/tenants/${inviteData.tenantId}/invite-admin`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -39,7 +41,7 @@ const TenantAdminManagement = () => {
             if (res.ok) {
                 setShowInvite(false);
                 // Refresh list
-                const refreshed = await fetch('http://localhost:8080/super-admin/admins', {
+                const refreshed = await fetch(`${API_BASE_URL}/super-admin/admins`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 setAdmins(await refreshed.json());
@@ -51,7 +53,7 @@ const TenantAdminManagement = () => {
 
     const handleStatusUpdate = async (id, status) => {
         try {
-            const res = await fetch(`http://localhost:8080/super-admin/admins/${id}/status?status=${status}`, {
+            const res = await fetch(`${API_BASE_URL}/super-admin/admins/${id}/status?status=${status}`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

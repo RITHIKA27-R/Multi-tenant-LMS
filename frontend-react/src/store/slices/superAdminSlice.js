@@ -1,29 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config';
 
 export const fetchTenants = createAsyncThunk('superAdmin/fetchTenants', async (token) => {
-    const response = await axios.get('http://localhost:8080/tenants', {
+    const response = await axios.get(`${API_BASE_URL}/tenants`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     return response.data;
 });
 
 export const createTenant = createAsyncThunk('superAdmin/createTenant', async ({ tenantData, token }) => {
-    const response = await axios.post('http://localhost:8080/tenants', tenantData, {
+    const response = await axios.post(`${API_BASE_URL}/tenants`, tenantData, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     return response.data;
 });
 
 export const updateTenant = createAsyncThunk('superAdmin/updateTenant', async ({ id, tenantData, token }) => {
-    const response = await axios.put(`http://localhost:8080/tenants/${id}`, tenantData, {
+    const response = await axios.put(`${API_BASE_URL}/tenants/${id}`, tenantData, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     return response.data;
 });
 
 export const deleteTenant = createAsyncThunk('superAdmin/deleteTenant', async ({ id, token }) => {
-    await axios.delete(`http://localhost:8080/tenants/${id}`, {
+    await axios.delete(`${API_BASE_URL}/tenants/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     return id;

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
 import { ShieldAlert, LogIn, Lock, Globe } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const SecurityLogs = () => {
     const { token } = useAuth();
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8081/super-admin/audit-logs', {
+        fetch(`${API_BASE_URL}/super-admin/audit-logs`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())

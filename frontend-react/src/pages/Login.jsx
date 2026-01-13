@@ -10,6 +10,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const [isSignUp, setIsSignUp] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -17,9 +18,10 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        const endpoint = isSignUp ? `${API_BASE_URL}/auth/register` : `${API_BASE_URL}/auth/login`;
+        setLoading(true);
 
         try {
-            const endpoint = isSignUp ? `${API_BASE_URL}/auth/register` : `${API_BASE_URL}/auth/login`;
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -54,6 +56,8 @@ const Login = () => {
                 // Show the specific error from data (e.g. "User with this email already exists", "Invalid credentials")
                 setError(err.message);
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -109,9 +113,13 @@ const Login = () => {
                         />
                     </div>
 
-                    <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-                        {isSignUp ? <LogIn size={20} /> : <LogIn size={20} />}
-                        <span>{isSignUp ? 'Sign Up' : 'Sign In'}</span>
+                    <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+                        {loading ? <span>Processing...</span> : (
+                            <>
+                                <LogIn size={20} />
+                                <span>{isSignUp ? 'Sign Up' : 'Sign In'}</span>
+                            </>
+                        )}
                     </button>
 
                     <div style={{ marginTop: '16px', textAlign: 'center' }}>

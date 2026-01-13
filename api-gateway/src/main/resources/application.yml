@@ -18,7 +18,7 @@ spring:
               - DELETE
               - OPTIONS
             allowedHeaders: "*"
-            allowCredentials: true
+            allowCredentials: false
       routes:
 
         # USER SERVICE (PUBLIC AUTH APIs)

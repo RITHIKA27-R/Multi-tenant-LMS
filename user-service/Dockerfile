@@ -1,11 +1,8 @@
 # Build stage
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
-COPY pom.xml .
-WORKDIR /app/user-service
-COPY user-service/pom.xml .
-COPY user-service/src ./src
-RUN mvn clean package -DskipTests
+COPY . .
+RUN mvn clean package -pl user-service -am -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine

@@ -9,6 +9,7 @@
     <name>multi-tenant-lms</name>
     <description>Multi-Tenant LMS Backend</description>
 
+<!-- 
     <modules>
         <module>discovery-server</module>
         <module>api-gateway</module>
@@ -19,6 +20,7 @@
         <module>attendance-service</module>
         <module>leave-service</module>
     </modules>
+-->
 
     <properties>
         <java.version>17</java.version>

@@ -2,11 +2,8 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 
-# Copy the root pom first to cache dependencies
-COPY pom.xml .
-# Copy the api-gateway module
-COPY api-gateway/pom.xml api-gateway/
-COPY api-gateway/src api-gateway/src
+# Copy the entire project context to satisfy multi-module dependencies
+COPY . .
 
 # Build the api-gateway module
 RUN mvn clean package -pl api-gateway -am -DskipTests

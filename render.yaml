@@ -1,17 +1,4 @@
 services:
-  # MySQL Database
-  - type: pserv
-    name: lms-db
-    env: docker
-    dockerContext: .
-    dockerfilePath: db.Dockerfile
-    plan: free
-    envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        value: root
-      - key: MYSQL_DATABASE
-        value: lms_main
-
   # Discovery Server (Eureka)
   - type: pserv
     name: discovery-service
@@ -36,7 +23,7 @@ services:
       - key: PORT
         value: 8080
       - key: EUREKA_SERVER_URL
-        value: http://discovery-service:8761/eureka/
+        value: https://discovery-service-l6qx.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -57,7 +44,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: ${AIVEN_MYSQL_PASSWORD}
       - key: EUREKA_SERVER_URL
-        value: http://discovery-service:8761/eureka/
+        value: https://discovery-service-l6qx.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -78,7 +65,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: ${AIVEN_MYSQL_PASSWORD}
       - key: EUREKA_SERVER_URL
-        value: http://discovery-service:8761/eureka/
+        value: https://discovery-service-l6qx.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -99,7 +86,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: ${AIVEN_MYSQL_PASSWORD}
       - key: EUREKA_SERVER_URL
-        value: http://discovery-service:8761/eureka/
+        value: https://discovery-service-l6qx.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -120,7 +107,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: ${AIVEN_MYSQL_PASSWORD}
       - key: EUREKA_SERVER_URL
-        value: http://discovery-service:8761/eureka/
+        value: https://discovery-service-l6qx.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -141,7 +128,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: ${AIVEN_MYSQL_PASSWORD}
       - key: EUREKA_SERVER_URL
-        value: http://discovery-service:8761/eureka/
+        value: https://discovery-service-l6qx.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -162,6 +149,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: ${AIVEN_MYSQL_PASSWORD}
       - key: EUREKA_SERVER_URL
-        value: http://discovery-service:8761/eureka/
+        value: https://discovery-service-l6qx.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
+

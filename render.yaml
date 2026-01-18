@@ -14,7 +14,7 @@ services:
 
   # Discovery Server (Eureka)
   - type: pserv
-    name: discovery-server
+    name: discovery-service
     env: docker
     dockerContext: .
     dockerfilePath: discovery-server/Dockerfile
@@ -32,12 +32,11 @@ services:
     dockerContext: .
     dockerfilePath: api-gateway/Dockerfile
     plan: free
-    healthCheckPath: /actuator/health
     envVars:
       - key: PORT
         value: 8080
       - key: EUREKA_SERVER_URL
-        value: http://discovery-server:8761/eureka/
+        value: http://discovery-service:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -58,7 +57,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: root
       - key: EUREKA_SERVER_URL
-        value: http://discovery-server:8761/eureka/
+        value: http://discovery-service:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -79,7 +78,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: root
       - key: EUREKA_SERVER_URL
-        value: http://discovery-server:8761/eureka/
+        value: http://discovery-service:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -100,7 +99,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: root
       - key: EUREKA_SERVER_URL
-        value: http://discovery-server:8761/eureka/
+        value: http://discovery-service:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -121,7 +120,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: root
       - key: EUREKA_SERVER_URL
-        value: http://discovery-server:8761/eureka/
+        value: http://discovery-service:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -142,7 +141,7 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: root
       - key: EUREKA_SERVER_URL
-        value: http://discovery-server:8761/eureka/
+        value: http://discovery-service:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -163,6 +162,6 @@ services:
       - key: SPRING_DATASOURCE_PASSWORD
         value: root
       - key: EUREKA_SERVER_URL
-        value: http://discovery-server:8761/eureka/
+        value: http://discovery-service:8761/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker

@@ -2,11 +2,8 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 
-# Copy the root pom first to cache dependencies
-COPY pom.xml .
-# Copy the discovery-server module
-COPY discovery-server/pom.xml discovery-server/
-COPY discovery-server/src discovery-server/src
+# Copy the entire project context to satisfy multi-module dependencies
+COPY . .
 
 # Build the discovery-server module
 RUN mvn clean package -pl discovery-server -am -DskipTests

@@ -1,6 +1,6 @@
 services:
   # Discovery Server (Eureka)
-  - type: pserv
+  - type: web
     name: discovery-service
     env: docker
     dockerContext: .
@@ -28,7 +28,7 @@ services:
         value: docker
 
   # User Service
-  - type: pserv
+  - type: web
     name: user-service
     env: docker
     dockerContext: .
@@ -49,7 +49,7 @@ services:
         value: docker
 
   # Course Service
-  - type: pserv
+  - type: web
     name: course-service
     env: docker
     dockerContext: .
@@ -70,7 +70,7 @@ services:
         value: docker
 
   # Assessment Service
-  - type: pserv
+  - type: web
     name: assessment-service
     env: docker
     dockerContext: .
@@ -91,7 +91,7 @@ services:
         value: docker
 
   # Notification Service
-  - type: pserv
+  - type: web
     name: notification-service
     env: docker
     dockerContext: .
@@ -112,7 +112,7 @@ services:
         value: docker
 
   # Attendance Service
-  - type: pserv
+  - type: web
     name: attendance-service
     env: docker
     dockerContext: .
@@ -133,7 +133,7 @@ services:
         value: docker
 
   # Leave Service
-  - type: pserv
+  - type: web
     name: leave-service
     env: docker
     dockerContext: .

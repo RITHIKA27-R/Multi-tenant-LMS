@@ -2,11 +2,8 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 
-# Copy the root pom first to cache dependencies
-COPY pom.xml .
-# Copy the user-service module
-COPY user-service/pom.xml user-service/
-COPY user-service/src user-service/src
+# Copy the entire project context to satisfy multi-module dependencies
+COPY . .
 
 # Build the user-service module
 RUN mvn clean package -pl user-service -am -DskipTests

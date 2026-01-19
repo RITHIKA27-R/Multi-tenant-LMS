@@ -1,0 +1,10 @@
+com\multi\tenant\assessment\controller\AssessmentController.class
+com\multi\tenant\assessment\domain\Assessment.class
+com\multi\tenant\assessment\domain\Submission.class
+com\multi\tenant\assessment\repo\TestAttemptRepository.class
+com\multi\tenant\assessment\AssessmentServiceApplication.class
+com\multi\tenant\assessment\repo\SubmissionRepository.class
+com\multi\tenant\assessment\repo\AssessmentRepository.class
+com\multi\tenant\assessment\context\TenantContext.class
+com\multi\tenant\assessment\domain\TestAttempt.class
+com\multi\tenant\assessment\filter\TenantFilter.class

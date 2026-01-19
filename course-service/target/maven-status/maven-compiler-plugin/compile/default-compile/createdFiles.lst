@@ -1,0 +1,6 @@
+com\multi\tenant\course\CourseServiceApplication.class
+com\multi\tenant\course\context\TenantContext.class
+com\multi\tenant\course\repo\CourseRepository.class
+com\multi\tenant\course\controller\CourseController.class
+com\multi\tenant\course\domain\Course.class
+com\multi\tenant\course\filter\TenantFilter.class

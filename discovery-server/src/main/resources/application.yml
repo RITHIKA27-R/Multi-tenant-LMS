@@ -1,18 +1,33 @@
+spring:
+  application:
+    name: discovery-service
+
 server:
   port: ${PORT:8761}
 
+spring:
+  application:
+    name: discovery-server
+
 eureka:
+  instance:
+    hostname: ${RENDER_EXTERNAL_HOSTNAME:localhost}
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${RENDER_INSTANCE_ID:${random.value}}
   client:
     register-with-eureka: false
     fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     wait-time-in-ms-when-sync-empty: 0
+    enable-self-preservation: false
 
 management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: health,info
   endpoint:
     health:
       show-details: always

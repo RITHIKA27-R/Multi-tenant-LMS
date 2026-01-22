@@ -11,6 +11,8 @@ services:
         value: 10000
       - key: SPRING_PROFILES_ACTIVE
         value: docker
+      - key: RENDER_EXTERNAL_HOSTNAME
+        value: discovery-service-nb5s.onrender.com
 
   # API Gateway
   - type: web

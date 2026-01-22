@@ -23,7 +23,7 @@ services:
       - key: PORT
         value: 10000
       - key: EUREKA_SERVER_URL
-        value: https://discovery-service.onrender.com/eureka/
+        value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -38,13 +38,13 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: ${AIVEN_MYSQL_URL}
+        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?ssl-mode=REQUIRED&createDatabaseIfNotExist=true
       - key: SPRING_DATASOURCE_USERNAME
         value: avnadmin
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${AIVEN_MYSQL_PASSWORD}
+        value: AVNS_QBUJCEZCE_0r7adA3WT
       - key: EUREKA_SERVER_URL
-        value: https://discovery-service.onrender.com/eureka/
+        value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -59,13 +59,13 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: ${AIVEN_MYSQL_URL}
+        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?ssl-mode=REQUIRED&createDatabaseIfNotExist=true
       - key: SPRING_DATASOURCE_USERNAME
         value: avnadmin
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${AIVEN_MYSQL_PASSWORD}
+        value: AVNS_QBUJCEZCE_0r7adA3WT
       - key: EUREKA_SERVER_URL
-        value: https://discovery-service.onrender.com/eureka/
+        value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -80,13 +80,13 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: ${AIVEN_MYSQL_URL}
+        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?ssl-mode=REQUIRED&createDatabaseIfNotExist=true
       - key: SPRING_DATASOURCE_USERNAME
         value: avnadmin
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${AIVEN_MYSQL_PASSWORD}
+        value: AVNS_QBUJCEZCE_0r7adA3WT
       - key: EUREKA_SERVER_URL
-        value: https://discovery-service.onrender.com/eureka/
+        value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -101,13 +101,13 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: ${AIVEN_MYSQL_URL}
+        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?ssl-mode=REQUIRED&createDatabaseIfNotExist=true
       - key: SPRING_DATASOURCE_USERNAME
         value: avnadmin
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${AIVEN_MYSQL_PASSWORD}
+        value: AVNS_QBUJCEZCE_0r7adA3WT
       - key: EUREKA_SERVER_URL
-        value: https://discovery-service.onrender.com/eureka/
+        value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -122,13 +122,13 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: ${AIVEN_MYSQL_URL}
+        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?ssl-mode=REQUIRED&createDatabaseIfNotExist=true
       - key: SPRING_DATASOURCE_USERNAME
         value: avnadmin
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${AIVEN_MYSQL_PASSWORD}
+        value: AVNS_QBUJCEZCE_0r7adA3WT
       - key: EUREKA_SERVER_URL
-        value: https://discovery-service.onrender.com/eureka/
+        value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
 
@@ -143,12 +143,12 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: ${AIVEN_MYSQL_URL}
+        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?ssl-mode=REQUIRED&createDatabaseIfNotExist=true
       - key: SPRING_DATASOURCE_USERNAME
         value: avnadmin
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${AIVEN_MYSQL_PASSWORD}
+        value: AVNS_QBUJCEZCE_0r7adA3WT
       - key: EUREKA_SERVER_URL
-        value: https://discovery-service.onrender.com/eureka/
+        value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker

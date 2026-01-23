@@ -162,12 +162,12 @@ services:
         value: docker
 
   # Frontend React App (Static Site)
-  - type: static
+  - type: web
     name: frontend-react
     env: static
     rootDir: frontend-react
     buildCommand: npm install && npm run build
-    publishPath: dist
+    staticPublishPath: dist
     plan: free
     routes:
       - type: rewrite

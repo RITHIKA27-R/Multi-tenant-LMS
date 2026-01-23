@@ -36,6 +36,9 @@ public class TenantController {
     @Autowired
     private com.multi.tenant.user.service.EmailService emailService;
 
+    @org.springframework.beans.factory.annotation.Value("${app.frontend-url}")
+    private String frontendUrl;
+
     @GetMapping
     public List<Tenant> getAllTenants() {
         return tenantRepository.findAll();
@@ -105,7 +108,7 @@ public class TenantController {
         admin.setInvitationToken(UUID.randomUUID().toString());
 
         // Send email
-        String link = "http://localhost:5173/set-password?token=" + admin.getInvitationToken();
+        String link = frontendUrl + "/set-password?token=" + admin.getInvitationToken();
         System.out.println("Invitation Link (Console Fallback): " + link);
 
         emailService.sendInvitationEmail(admin.getEmail(), link);

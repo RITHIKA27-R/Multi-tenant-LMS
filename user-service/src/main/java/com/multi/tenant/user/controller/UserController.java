@@ -21,6 +21,9 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @org.springframework.beans.factory.annotation.Value("${app.frontend-url}")
+    private String frontendUrl;
+
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAllByTenantId(TenantContext.getTenantId());
@@ -37,7 +40,7 @@ public class UserController {
         user.setPassword(UUID.randomUUID().toString()); // Placeholder, effectively unusable
         user.setInvitationToken(UUID.randomUUID().toString());
 
-        System.out.println("Invitation Link: http://localhost:5173/set-password?token=" + user.getInvitationToken());
+        System.out.println("Invitation Link: " + frontendUrl + "/set-password?token=" + user.getInvitationToken());
 
         return userRepository.save(user);
     }

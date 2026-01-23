@@ -13,14 +13,29 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException e) {
+        // Log the full stack trace so we can see it in Render logs
+        e.printStackTrace();
+
         Map<String, String> error = new HashMap<>();
-        error.put("error", e.getMessage());
+        String message = e.getMessage();
+
+        // Handle null messages (e.g., from NullPointerException)
+        if (message == null) {
+            message = "Internal Server Error (No detailed message available). Check logs for NullPointerException.";
+            if (e instanceof NullPointerException) {
+                message = "NullPointerException occurred in the server.";
+            }
+        }
+
+        error.put("error", message);
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        if (e.getMessage().contains("Invalid credentials") ||
-                e.getMessage().contains("User not found") ||
-                e.getMessage().contains("Account is locked") ||
-                e.getMessage().contains("Account pending")) {
+
+        // Use the safe 'message' variable instead of e.getMessage()
+        if (message.contains("Invalid credentials") ||
+                message.contains("User not found") ||
+                message.contains("Account is locked") ||
+                message.contains("Account pending")) {
             status = HttpStatus.UNAUTHORIZED;
         }
 

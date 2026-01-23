@@ -1,6 +1,0 @@
-com\multi\tenant\notification\filter\TenantFilter.class
-com\multi\tenant\notification\repo\NotificationRepository.class
-com\multi\tenant\notification\NotificationServiceApplication.class
-com\multi\tenant\notification\controller\NotificationController.class
-com\multi\tenant\notification\domain\Notification.class
-com\multi\tenant\notification\context\TenantContext.class

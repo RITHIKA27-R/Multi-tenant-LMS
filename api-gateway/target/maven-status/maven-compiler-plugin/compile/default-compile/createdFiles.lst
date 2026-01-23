@@ -1,5 +1,0 @@
-com\multi\tenant\gateway\filter\AuthenticationFilter.class
-com\multi\tenant\gateway\filter\RouteValidator.class
-com\multi\tenant\gateway\filter\AuthenticationFilter$Config.class
-com\multi\tenant\gateway\util\JwtUtil.class
-com\multi\tenant\gateway\ApiGatewayApplication.class

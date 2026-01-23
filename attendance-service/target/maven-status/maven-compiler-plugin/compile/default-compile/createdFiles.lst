@@ -1,6 +1,0 @@
-com\multi\tenant\attendance\filter\TenantContext.class
-com\multi\tenant\attendance\AttendanceServiceApplication.class
-com\multi\tenant\attendance\filter\TenantFilter.class
-com\multi\tenant\attendance\repo\AttendanceRepository.class
-com\multi\tenant\attendance\controller\AttendanceController.class
-com\multi\tenant\attendance\domain\Attendance.class

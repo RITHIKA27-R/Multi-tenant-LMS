@@ -4,7 +4,7 @@ dist/
 build/
 
 # Java / Spring Boot
-# target/ (Removed to allow pre-built JAR deployment)
+target/
 *.log
 
 # Env files

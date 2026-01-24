@@ -16,5 +16,6 @@ public class LoginAuditLog {
     private Long tenantId;
     private LocalDateTime loginTime;
     private String ipAddress;
-    private String status; // SUCCESS, FAILED
+    @Enumerated(EnumType.STRING)
+    private LoginStatus status; // SUCCESS, FAILED, BLOCKED_IP
 }

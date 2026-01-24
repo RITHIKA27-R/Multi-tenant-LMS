@@ -14,6 +14,8 @@ public class IpRestriction {
 
     private String ipAddress;
     private String description; // e.g., "Office Network"
+    @Enumerated(EnumType.STRING)
+    private IpRestrictionType type; // ALLOW, BLOCK
     private boolean allowed; // true = allow list, false = block list (usually whitelist approach is safer)
     private Long tenantId; // Null for global (Super Admin), specific for tenants
     private LocalDateTime createdAt = LocalDateTime.now();

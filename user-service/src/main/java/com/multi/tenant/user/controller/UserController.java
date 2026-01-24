@@ -1,6 +1,8 @@
 package com.multi.tenant.user.controller;
 
 import com.multi.tenant.user.domain.User;
+import com.multi.tenant.user.domain.Role;
+import com.multi.tenant.user.domain.Status;
 import com.multi.tenant.user.repo.UserRepository;
 import com.multi.tenant.user.filter.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,9 @@ public class UserController {
         User user = new User();
         user.setEmail(inviteRequest.getEmail());
         user.setUsername(inviteRequest.getEmail());
-        user.setRole(inviteRequest.getRole() != null ? inviteRequest.getRole() : "LEARNER");
+        user.setRole(inviteRequest.getRole() != null ? inviteRequest.getRole() : Role.LEARNER);
         user.setTenantId(TenantContext.getTenantId());
-        user.setStatus("PENDING");
+        user.setStatus(Status.PENDING);
         user.setPassword(UUID.randomUUID().toString()); // Placeholder, effectively unusable
         user.setInvitationToken(UUID.randomUUID().toString());
 

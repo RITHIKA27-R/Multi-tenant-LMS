@@ -13,7 +13,8 @@ public class Announcement {
 
     private String title;
     private String message;
-    private String target; // ALL, TENANT_ADMINS, LEARNERS
+    @Enumerated(EnumType.STRING)
+    private AnnouncementTarget target; // ALL, TENANT_ADMINS, LEARNERS
     private LocalDateTime publishedAt = LocalDateTime.now();
     private Boolean active = true;
 }

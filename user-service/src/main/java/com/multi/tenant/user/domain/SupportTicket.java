@@ -14,8 +14,10 @@ public class SupportTicket {
     private Long tenantId;
     private String subject;
     private String description;
-    private String status; // OPEN, IN_PROGRESS, RESOLVED
-    private String priority; // LOW, MEDIUM, HIGH
+    @Enumerated(EnumType.STRING)
+    private TicketStatus status; // OPEN, IN_PROGRESS, RESOLVED
+    @Enumerated(EnumType.STRING)
+    private TicketPriority priority; // LOW, MEDIUM, HIGH
     private LocalDateTime createdAt = LocalDateTime.now();
     private String createdBy; // Email
 }

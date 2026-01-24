@@ -1,7 +1,8 @@
 package com.multi.tenant.user.controller;
 
-import com.multi.tenant.user.domain.Tenant;
-import com.multi.tenant.user.domain.User;
+import com.multi.tenant.user.domain.*;
+import com.multi.tenant.user.domain.Role;
+import com.multi.tenant.user.domain.Status;
 import com.multi.tenant.user.repo.TenantRepository;
 import com.multi.tenant.user.repo.UserRepository;
 import com.multi.tenant.user.repo.LoginAuditLogRepository;
@@ -101,9 +102,9 @@ public class TenantController {
         User admin = new User();
         admin.setEmail(adminRequest.getEmail());
         admin.setUsername(adminRequest.getEmail());
-        admin.setRole("TENANT_ADMIN");
+        admin.setRole(Role.TENANT_ADMIN);
         admin.setTenantId(tenantId);
-        admin.setStatus("PENDING");
+        admin.setStatus(Status.PENDING);
         admin.setPassword(passwordEncoder.encode(UUID.randomUUID().toString())); // Placeholder
         admin.setInvitationToken(UUID.randomUUID().toString());
 

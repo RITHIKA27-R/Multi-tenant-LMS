@@ -2,6 +2,8 @@ package com.multi.tenant.user;
 
 import com.multi.tenant.user.domain.Tenant;
 import com.multi.tenant.user.domain.User;
+import com.multi.tenant.user.domain.Role;
+import com.multi.tenant.user.domain.Status;
 import com.multi.tenant.user.repo.TenantRepository;
 import com.multi.tenant.user.repo.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -9,7 +11,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
@@ -27,7 +28,7 @@ public class UserServiceApplication {
                 System.out.println("Starting data seeding...");
 
                 // 1. Seed Tenants SAFELY
-                Tenant t1 = tenantRepository.findByIdentifier("acme");
+                Tenant t1 = tenantRepository.findByIdentifier("acme").orElse(null);
                 if (t1 == null) {
                     System.out.println("Seeding Acme tenant...");
                     t1 = new Tenant();
@@ -37,7 +38,7 @@ public class UserServiceApplication {
                     System.out.println("Acme tenant seeded with ID: " + t1.getId());
                 }
 
-                Tenant t2 = tenantRepository.findByIdentifier("beta");
+                Tenant t2 = tenantRepository.findByIdentifier("beta").orElse(null);
                 if (t2 == null) {
                     System.out.println("Seeding Beta tenant...");
                     t2 = new Tenant();
@@ -49,16 +50,16 @@ public class UserServiceApplication {
 
                 // 2. Seed Users SAFELY
                 seedUserIfMissing(userRepository, passwordEncoder, "superadmin", "superadmin@lms.com",
-                        "superpassword", "SUPER_ADMIN", null);
+                        "superpassword", Role.SUPER_ADMIN, null);
 
                 if (t1 != null) {
                     seedUserIfMissing(userRepository, passwordEncoder, "tenant", "tenant@gmail.com", "password",
-                            "TENANT_ADMIN", t1.getId());
+                            Role.TENANT_ADMIN, t1.getId());
                 }
 
                 if (t2 != null) {
                     seedUserIfMissing(userRepository, passwordEncoder, "learner", "learner@lms.com", "password",
-                            "LEARNER", t2.getId());
+                            Role.LEARNER, t2.getId());
                 }
 
                 System.out.println("Data seeding completed successfully.");
@@ -70,7 +71,7 @@ public class UserServiceApplication {
     }
 
     private void seedUserIfMissing(UserRepository userRepository, PasswordEncoder passwordEncoder,
-            String username, String email, String password, String role, Long tenantId) {
+            String username, String email, String password, Role role, Long tenantId) {
         if (userRepository.findByEmail(email).isEmpty() && userRepository.findByUsername(username).isEmpty()) {
             System.out.println("Seeding user: " + email + " (Username: " + username + ")");
             User user = new User();
@@ -79,7 +80,7 @@ public class UserServiceApplication {
             user.setPassword(passwordEncoder.encode(password));
             user.setRole(role);
             user.setTenantId(tenantId);
-            user.setStatus("ACTIVE");
+            user.setStatus(Status.ACTIVE);
             userRepository.save(user);
             System.out.println("User seeded successfully: " + email);
         } else {

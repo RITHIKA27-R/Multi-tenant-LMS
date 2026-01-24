@@ -11,8 +11,10 @@ public class RolePermission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String role; // SUPER_ADMIN, TENANT_ADMIN, LEARNER
-    private String module; // e.g., "USERS", "COURSES", "BILLING"
+    @Enumerated(EnumType.STRING)
+    private Role role; // SUPER_ADMIN, TENANT_ADMIN, LEARNER
+    @Enumerated(EnumType.STRING)
+    private PermissionModule module; // e.g., "USERS", "COURSES", "BILLING"
     private boolean canCreate;
     private boolean canRead;
     private boolean canUpdate;

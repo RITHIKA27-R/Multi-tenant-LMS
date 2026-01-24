@@ -21,8 +21,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String role; // SUPER_ADMIN, TENANT_ADMIN, LEARNER, INSTRUCTOR
+    private Role role; // SUPER_ADMIN, TENANT_ADMIN, LEARNER, INSTRUCTOR
 
     @Column(name = "tenant_id", nullable = true)
     private Long tenantId; // Null for Super Admin
@@ -30,7 +31,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    private String status; // ACTIVE, PENDING, LOCKED
+    @Enumerated(EnumType.STRING)
+    private Status status; // ACTIVE, PENDING, LOCKED
     private Integer failedLoginAttempts = 0;
     private java.time.LocalDateTime lastLoginTime;
     private String invitationToken;

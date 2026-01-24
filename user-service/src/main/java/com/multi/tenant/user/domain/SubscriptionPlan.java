@@ -10,7 +10,8 @@ public class SubscriptionPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name; // FREE, PRO, ENTERPRISE
+    @Enumerated(EnumType.STRING)
+    private PlanType name; // FREE, PRO, ENTERPRISE
     private Integer userLimit;
     private Long storageLimit; // MB
     private Double price;

@@ -37,7 +37,7 @@ public class SuperAdminController {
         stats.put("totalTenants", tenantRepository.count());
         stats.put("totalUsers", userRepository.count());
         stats.put("activeTenants", tenantRepository.count()); // Simplification
-        stats.put("pendingTickets", supportTicketRepository.findAllByStatus("OPEN").size());
+        stats.put("pendingTickets", supportTicketRepository.findAllByStatus(TicketStatus.OPEN).size());
         return stats;
     }
 
@@ -60,16 +60,16 @@ public class SuperAdminController {
     public SupportTicket createTicket(@RequestBody SupportTicket ticket) {
         ticket.setCreatedAt(java.time.LocalDateTime.now());
         if (ticket.getStatus() == null) {
-            ticket.setStatus("OPEN");
+            ticket.setStatus(TicketStatus.OPEN);
         }
         if (ticket.getPriority() == null) {
-            ticket.setPriority("MEDIUM");
+            ticket.setPriority(TicketPriority.MEDIUM);
         }
         return supportTicketRepository.save(ticket);
     }
 
     @PutMapping("/tickets/{id}/status")
-    public SupportTicket updateTicketStatus(@PathVariable("id") Long id, @RequestParam("status") String status) {
+    public SupportTicket updateTicketStatus(@PathVariable("id") Long id, @RequestParam("status") TicketStatus status) {
         SupportTicket ticket = supportTicketRepository.findById(id).orElseThrow();
         ticket.setStatus(status);
         return supportTicketRepository.save(ticket);
@@ -118,12 +118,12 @@ public class SuperAdminController {
     @GetMapping("/admins")
     public List<User> getAdmins() {
         return userRepository.findAll().stream()
-                .filter(u -> "TENANT_ADMIN".equals(u.getRole()))
+                .filter(u -> Role.TENANT_ADMIN.equals(u.getRole()))
                 .toList();
     }
 
     @PostMapping("/admins/{id}/status")
-    public User updateAdminStatus(@PathVariable("id") Long id, @RequestParam("status") String status) {
+    public User updateAdminStatus(@PathVariable("id") Long id, @RequestParam("status") Status status) {
         User user = userRepository.findById(id).orElseThrow();
         user.setStatus(status);
         return userRepository.save(user);

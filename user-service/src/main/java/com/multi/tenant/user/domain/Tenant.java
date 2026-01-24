@@ -15,7 +15,8 @@ public class Tenant {
     @Column(unique = true)
     private String identifier;
 
-    private String planType; // FREE, PRO, ENTERPRISE
+    @Enumerated(EnumType.STRING)
+    private PlanType planType; // FREE, PRO, ENTERPRISE
     private Integer userLimit;
     private Long storageLimit; // In MB
     private java.time.LocalDate expiryDate;

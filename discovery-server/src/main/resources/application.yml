@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: discovery-server
+  main:
+    lazy-initialization: true  # Faster startup time
+    banner-mode: off  # Reduce startup output
 
 eureka:
   instance:
@@ -28,3 +31,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.springframework.context.support.PostProcessorRegistrationDelegate: ERROR
+    org.springframework.cloud.loadbalancer: ERROR
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

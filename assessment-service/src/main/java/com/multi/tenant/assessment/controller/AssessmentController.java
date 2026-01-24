@@ -11,6 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/assessments")
+@SuppressWarnings("null")
 public class AssessmentController {
 
     @Autowired
@@ -23,7 +24,7 @@ public class AssessmentController {
     private com.multi.tenant.assessment.repo.TestAttemptRepository testAttemptRepository;
 
     @GetMapping
-    public List<Assessment> getAssessments() {
+    public @org.springframework.lang.NonNull List<Assessment> getAssessments() {
         Long tenantId = TenantContext.getTenantId();
         if (tenantId == null)
             throw new RuntimeException("Tenant ID missing");
@@ -31,13 +32,13 @@ public class AssessmentController {
     }
 
     @GetMapping("/submissions")
-    public List<com.multi.tenant.assessment.domain.Submission> getSubmissions() {
+    public @org.springframework.lang.NonNull List<com.multi.tenant.assessment.domain.Submission> getSubmissions() {
         Long tenantId = TenantContext.getTenantId();
         return submissionRepository.findAllByTenantId(tenantId);
     }
 
     @PostMapping
-    public Assessment createAssessment(@RequestBody Assessment assessment) {
+    public @org.springframework.lang.NonNull Assessment createAssessment(@RequestBody Assessment assessment) {
         Long tenantId = TenantContext.getTenantId();
         if (tenantId == null)
             throw new RuntimeException("Tenant ID missing");
@@ -65,7 +66,8 @@ public class AssessmentController {
     }
 
     @PostMapping("/grade/{id}")
-    public com.multi.tenant.assessment.domain.Submission gradeSubmission(@PathVariable("id") Long id,
+    public com.multi.tenant.assessment.domain.Submission gradeSubmission(
+            @PathVariable("id") @org.springframework.lang.NonNull Long id,
             @RequestBody Map<String, Object> gradeData) {
         Long tenantId = TenantContext.getTenantId();
         com.multi.tenant.assessment.domain.Submission submission = submissionRepository.findById(id)
@@ -80,7 +82,7 @@ public class AssessmentController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAssessment(@PathVariable("id") Long id) {
+    public void deleteAssessment(@PathVariable("id") @org.springframework.lang.NonNull Long id) {
         Long tenantId = TenantContext.getTenantId();
         Assessment a = assessmentRepository.findById(id)
                 .filter(x -> x.getTenantId().equals(tenantId))
@@ -96,7 +98,7 @@ public class AssessmentController {
             @RequestHeader(value = "X-User-Name", defaultValue = "student") String username) {
         Long tenantId = TenantContext.getTenantId();
 
-        Assessment assessment = assessmentRepository.findById(testId)
+        assessmentRepository.findById(testId)
                 .filter(a -> a.getTenantId().equals(tenantId))
                 .orElseThrow(() -> new RuntimeException("Assessment not found"));
 
@@ -122,7 +124,8 @@ public class AssessmentController {
     }
 
     @GetMapping("/attempts/{attemptId}")
-    public Map<String, Object> getAttempt(@PathVariable Long attemptId) {
+    public @org.springframework.lang.NonNull Map<String, Object> getAttempt(
+            @PathVariable("attemptId") @org.springframework.lang.NonNull Long attemptId) {
         Long tenantId = TenantContext.getTenantId();
         com.multi.tenant.assessment.domain.TestAttempt attempt = testAttemptRepository.findById(attemptId)
                 .filter(a -> a.getTenantId().equals(tenantId))

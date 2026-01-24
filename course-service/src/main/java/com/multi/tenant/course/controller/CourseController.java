@@ -11,6 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/courses")
+@SuppressWarnings("null")
 public class CourseController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<Course> getCourses() {
+    public @org.springframework.lang.NonNull List<Course> getCourses() {
         Long tenantId = TenantContext.getTenantId();
         if (tenantId == null) {
             throw new RuntimeException("Tenant ID not found in context");
@@ -34,7 +35,8 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable("id") Long id) {
+    public @org.springframework.lang.NonNull Course getCourseById(
+            @PathVariable("id") @org.springframework.lang.NonNull Long id) {
         Long tenantId = TenantContext.getTenantId();
         return courseRepository.findById(id)
                 .filter(course -> course.getTenantId().equals(tenantId))
@@ -42,7 +44,8 @@ public class CourseController {
     }
 
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
+    public @org.springframework.lang.NonNull Course createCourse(
+            @RequestBody @org.springframework.lang.NonNull Course course) {
         Long tenantId = TenantContext.getTenantId();
         if (tenantId == null) {
             throw new RuntimeException("Tenant ID not found in context");
@@ -52,7 +55,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable("id") Long id) {
+    public void deleteCourse(@PathVariable("id") @org.springframework.lang.NonNull Long id) {
         Long tenantId = TenantContext.getTenantId();
         Course course = courseRepository.findById(id)
                 .filter(c -> c.getTenantId().equals(tenantId))

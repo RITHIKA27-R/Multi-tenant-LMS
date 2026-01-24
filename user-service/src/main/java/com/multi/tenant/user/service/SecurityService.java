@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@SuppressWarnings("null")
 public class SecurityService {
 
     @Autowired
@@ -29,14 +30,16 @@ public class SecurityService {
     }
 
     // --- IP Restrictions ---
-    public List<IpRestriction> getIpRestrictions(Long tenantId) {
+    public @org.springframework.lang.NonNull List<com.multi.tenant.user.domain.IpRestriction> getIpRestrictions(
+            Long tenantId) {
         if (tenantId == null) {
             return ipRestrictionRepository.findAll();
         }
         return ipRestrictionRepository.findByTenantId(tenantId);
     }
 
-    public IpRestriction addIpRestriction(IpRestriction ipRestriction) {
+    public @org.springframework.lang.NonNull com.multi.tenant.user.domain.IpRestriction addIpRestriction(
+            @org.springframework.lang.NonNull com.multi.tenant.user.domain.IpRestriction ipRestriction) {
         return ipRestrictionRepository.save(ipRestriction);
     }
 
@@ -66,7 +69,8 @@ public class SecurityService {
         return rolePermissionRepository.findByTenantId(tenantId);
     }
 
-    public RolePermission updateRolePermission(RolePermission permission) {
+    public @org.springframework.lang.NonNull RolePermission updateRolePermission(
+            @org.springframework.lang.NonNull RolePermission permission) {
         return rolePermissionRepository.save(permission);
     }
 }

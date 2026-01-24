@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/security")
+@SuppressWarnings("null")
 public class SecurityController {
 
     @Autowired

@@ -7,24 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/leaves")
+@SuppressWarnings("null")
 public class LeaveController {
 
     @Autowired
     private LeaveRepository leaveRepository;
 
     @PostMapping("/apply")
-    public LeaveRequest apply(@RequestBody LeaveRequest request) {
+    public @org.springframework.lang.NonNull LeaveRequest apply(
+            @RequestBody @org.springframework.lang.NonNull LeaveRequest request) {
         request.setTenantId(TenantContext.getTenantId());
         request.setStatus("PENDING");
         return leaveRepository.save(request);
     }
 
     @GetMapping("/my-requests")
-    public List<LeaveRequest> getMyRequests(@RequestParam("username") String username) {
+    public @org.springframework.lang.NonNull List<LeaveRequest> getMyRequests(
+            @RequestParam("username") @org.springframework.lang.NonNull String username) {
         return leaveRepository.findAllByEmployeeIdAndTenantId(username, TenantContext.getTenantId());
     }
 

@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
+@SuppressWarnings("null")
 public class UserController {
 
     @Autowired
@@ -27,7 +28,7 @@ public class UserController {
     private String frontendUrl;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public @org.springframework.lang.NonNull List<User> getAllUsers() {
         return userRepository.findAllByTenantId(TenantContext.getTenantId());
     }
 
@@ -48,7 +49,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
+    public @org.springframework.lang.NonNull String deleteUser(
+            @PathVariable("id") @org.springframework.lang.NonNull Long id) {
         User user = userRepository.findById(id).orElseThrow();
         if (user.getTenantId().equals(TenantContext.getTenantId())) {
             userRepository.delete(user);

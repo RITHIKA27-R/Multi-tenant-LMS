@@ -1,7 +1,6 @@
 package com.multi.tenant.user.controller;
 
 import com.multi.tenant.user.domain.*;
-import com.multi.tenant.user.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,25 +10,26 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/super-admin")
+@SuppressWarnings("null")
 public class SuperAdminController {
 
     @Autowired
-    private TenantRepository tenantRepository;
+    private com.multi.tenant.user.repo.TenantRepository tenantRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private com.multi.tenant.user.repo.UserRepository userRepository;
 
     @Autowired
-    private SupportTicketRepository supportTicketRepository;
+    private com.multi.tenant.user.repo.SupportTicketRepository supportTicketRepository;
 
     @Autowired
-    private SubscriptionPlanRepository subscriptionPlanRepository;
+    private com.multi.tenant.user.repo.SubscriptionPlanRepository subscriptionPlanRepository;
 
     @Autowired
-    private AnnouncementRepository announcementRepository;
+    private com.multi.tenant.user.repo.AnnouncementRepository announcementRepository;
 
     @Autowired
-    private LoginAuditLogRepository auditLogRepository;
+    private com.multi.tenant.user.repo.LoginAuditLogRepository auditLogRepository;
 
     @GetMapping("/stats")
     public Map<String, Object> getDashboardStats() {
@@ -57,7 +57,7 @@ public class SuperAdminController {
     }
 
     @PostMapping("/tickets")
-    public SupportTicket createTicket(@RequestBody SupportTicket ticket) {
+    public @org.springframework.lang.NonNull SupportTicket createTicket(@RequestBody SupportTicket ticket) {
         ticket.setCreatedAt(java.time.LocalDateTime.now());
         if (ticket.getStatus() == null) {
             ticket.setStatus(TicketStatus.OPEN);
@@ -69,39 +69,43 @@ public class SuperAdminController {
     }
 
     @PutMapping("/tickets/{id}/status")
-    public SupportTicket updateTicketStatus(@PathVariable("id") Long id, @RequestParam("status") TicketStatus status) {
+    public SupportTicket updateTicketStatus(@PathVariable("id") @org.springframework.lang.NonNull Long id,
+            @RequestParam("status") TicketStatus status) {
         SupportTicket ticket = supportTicketRepository.findById(id).orElseThrow();
         ticket.setStatus(status);
         return supportTicketRepository.save(ticket);
     }
 
     @GetMapping("/tickets/tenant/{tenantId}")
-    public List<SupportTicket> getTicketsByTenant(@PathVariable("tenantId") Long tenantId) {
+    public List<SupportTicket> getTicketsByTenant(
+            @PathVariable("tenantId") @org.springframework.lang.NonNull Long tenantId) {
         return supportTicketRepository.findAllByTenantId(tenantId);
     }
 
     @PostMapping("/announcements")
-    public Announcement createAnnouncement(@RequestBody Announcement announcement) {
+    public @org.springframework.lang.NonNull Announcement createAnnouncement(@RequestBody Announcement announcement) {
         return announcementRepository.save(announcement);
     }
 
     @GetMapping("/audit-logs")
-    public List<LoginAuditLog> getAuditLogs() {
+    public @org.springframework.lang.NonNull List<LoginAuditLog> getAuditLogs() {
         return auditLogRepository.findAll();
     }
 
     @GetMapping("/plans")
-    public List<SubscriptionPlan> getPlans() {
+    public @org.springframework.lang.NonNull List<SubscriptionPlan> getPlans() {
         return subscriptionPlanRepository.findAll();
     }
 
     @PostMapping("/plans")
-    public SubscriptionPlan createPlan(@RequestBody SubscriptionPlan plan) {
+    public @org.springframework.lang.NonNull SubscriptionPlan createPlan(@RequestBody SubscriptionPlan plan) {
         return subscriptionPlanRepository.save(plan);
     }
 
     @PutMapping("/plans/{id}")
-    public SubscriptionPlan updatePlan(@PathVariable("id") Long id, @RequestBody SubscriptionPlan planDetails) {
+    public @org.springframework.lang.NonNull SubscriptionPlan updatePlan(
+            @PathVariable("id") @org.springframework.lang.NonNull Long id,
+            @RequestBody SubscriptionPlan planDetails) {
         SubscriptionPlan plan = subscriptionPlanRepository.findById(id).orElseThrow();
         plan.setName(planDetails.getName());
         plan.setUserLimit(planDetails.getUserLimit());
@@ -111,19 +115,21 @@ public class SuperAdminController {
     }
 
     @DeleteMapping("/plans/{id}")
-    public void deletePlan(@PathVariable("id") Long id) {
+    public void deletePlan(@PathVariable("id") @org.springframework.lang.NonNull Long id) {
         subscriptionPlanRepository.deleteById(id);
     }
 
     @GetMapping("/admins")
-    public List<User> getAdmins() {
+    public @org.springframework.lang.NonNull List<User> getAdmins() {
         return userRepository.findAll().stream()
                 .filter(u -> Role.TENANT_ADMIN.equals(u.getRole()))
                 .toList();
     }
 
     @PostMapping("/admins/{id}/status")
-    public User updateAdminStatus(@PathVariable("id") Long id, @RequestParam("status") Status status) {
+    public @org.springframework.lang.NonNull User updateAdminStatus(
+            @PathVariable("id") @org.springframework.lang.NonNull Long id,
+            @RequestParam("status") Status status) {
         User user = userRepository.findById(id).orElseThrow();
         user.setStatus(status);
         return userRepository.save(user);

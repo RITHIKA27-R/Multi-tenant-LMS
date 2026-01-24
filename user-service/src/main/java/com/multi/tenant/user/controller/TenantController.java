@@ -1,12 +1,5 @@
 package com.multi.tenant.user.controller;
 
-import com.multi.tenant.user.domain.*;
-import com.multi.tenant.user.domain.Role;
-import com.multi.tenant.user.domain.Status;
-import com.multi.tenant.user.repo.TenantRepository;
-import com.multi.tenant.user.repo.UserRepository;
-import com.multi.tenant.user.repo.LoginAuditLogRepository;
-import com.multi.tenant.user.repo.SupportTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +10,20 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/tenants")
+@SuppressWarnings("null")
 public class TenantController {
 
     @Autowired
-    private TenantRepository tenantRepository;
+    private com.multi.tenant.user.repo.TenantRepository tenantRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private com.multi.tenant.user.repo.UserRepository userRepository;
 
     @Autowired
-    private LoginAuditLogRepository auditLogRepository;
+    private com.multi.tenant.user.repo.LoginAuditLogRepository auditLogRepository;
 
     @Autowired
-    private SupportTicketRepository supportTicketRepository;
+    private com.multi.tenant.user.repo.SupportTicketRepository supportTicketRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,23 +35,26 @@ public class TenantController {
     private String frontendUrl;
 
     @GetMapping
-    public List<Tenant> getAllTenants() {
+    public @org.springframework.lang.NonNull List<com.multi.tenant.user.domain.Tenant> getAllTenants() {
         return tenantRepository.findAll();
     }
 
     @PostMapping
-    public Tenant createTenant(@RequestBody Tenant tenant) {
+    public @org.springframework.lang.NonNull com.multi.tenant.user.domain.Tenant createTenant(
+            @RequestBody com.multi.tenant.user.domain.Tenant tenant) {
         return tenantRepository.save(tenant);
     }
 
     @PutMapping("/{id}")
     @org.springframework.transaction.annotation.Transactional
-    public Tenant updateTenant(@PathVariable("id") Long id, @RequestBody Tenant tenantDetails) {
+    public @org.springframework.lang.NonNull com.multi.tenant.user.domain.Tenant updateTenant(
+            @PathVariable("id") @org.springframework.lang.NonNull Long id,
+            @RequestBody com.multi.tenant.user.domain.Tenant tenantDetails) {
         System.out.println("UPDATING TENANT ID: " + id);
-        Tenant tenant = tenantRepository.findById(id).orElseThrow();
+        com.multi.tenant.user.domain.Tenant tenant = tenantRepository.findById(id).orElseThrow();
         tenant.setName(tenantDetails.getName());
         tenant.setPlanType(tenantDetails.getPlanType());
-        Tenant updated = tenantRepository.save(tenant);
+        com.multi.tenant.user.domain.Tenant updated = tenantRepository.save(tenant);
         System.out.println("TENANT UPDATED SUCCESSFULLY: " + updated.getId());
         return updated;
     }
@@ -98,13 +95,15 @@ public class TenantController {
 
     @PostMapping("/{tenantId}/invite-admin")
     @org.springframework.transaction.annotation.Transactional
-    public User inviteTenantAdmin(@PathVariable("tenantId") Long tenantId, @RequestBody User adminRequest) {
-        User admin = new User();
+    public @org.springframework.lang.NonNull com.multi.tenant.user.domain.User inviteTenantAdmin(
+            @PathVariable("tenantId") @org.springframework.lang.NonNull Long tenantId,
+            @RequestBody com.multi.tenant.user.domain.User adminRequest) {
+        com.multi.tenant.user.domain.User admin = new com.multi.tenant.user.domain.User();
         admin.setEmail(adminRequest.getEmail());
         admin.setUsername(adminRequest.getEmail());
-        admin.setRole(Role.TENANT_ADMIN);
+        admin.setRole(com.multi.tenant.user.domain.Role.TENANT_ADMIN);
         admin.setTenantId(tenantId);
-        admin.setStatus(Status.PENDING);
+        admin.setStatus(com.multi.tenant.user.domain.Status.PENDING);
         admin.setPassword(passwordEncoder.encode(UUID.randomUUID().toString())); // Placeholder
         admin.setInvitationToken(UUID.randomUUID().toString());
 

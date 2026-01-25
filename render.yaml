@@ -168,7 +168,7 @@ services:
     rootDir: frontend-react
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    plan: free
+    # plan: free
     routes:
       - type: rewrite
         source: /*

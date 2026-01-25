@@ -38,7 +38,7 @@ check_ports() {
 build_services() {
     echo ""
     echo "Building Docker images..."
-    docker-compose build --parallel
+    docker compose build --parallel
     echo -e "${GREEN}✓ All services built successfully${NC}"
 }
 
@@ -46,7 +46,7 @@ build_services() {
 start_services() {
     echo ""
     echo "Starting all services..."
-    docker-compose up -d
+    docker compose up -d
     echo -e "${GREEN}✓ All services started${NC}"
 }
 
@@ -57,7 +57,7 @@ check_health() {
     sleep 10
     
     # Check MySQL
-    if docker-compose ps mysql-db | grep -q "healthy"; then
+    if docker compose ps mysql-db | grep -q "healthy"; then
         echo -e "${GREEN}✓ MySQL is healthy${NC}"
     else
         echo -e "${YELLOW}⚠ MySQL is starting...${NC}"
@@ -97,14 +97,14 @@ show_urls() {
 show_logs() {
     echo ""
     echo "Showing logs (Ctrl+C to exit)..."
-    docker-compose logs -f
+    docker compose logs -f
 }
 
 # Function to stop services
 stop_services() {
     echo ""
     echo "Stopping all services..."
-    docker-compose down
+    docker compose down
     echo -e "${GREEN}✓ All services stopped${NC}"
 }
 
@@ -112,7 +112,7 @@ stop_services() {
 cleanup() {
     echo ""
     echo "Cleaning up (removing containers, networks, and volumes)..."
-    docker-compose down -v
+    docker compose down -v
     echo -e "${GREEN}✓ Cleanup complete${NC}"
 }
 
@@ -160,7 +160,7 @@ case "${1}" in
         show_logs
         ;;
     status)
-        docker-compose ps
+        docker compose ps
         ;;
     clean)
         cleanup
@@ -192,7 +192,7 @@ case "${1}" in
                     show_logs
                     ;;
                 6)
-                    docker-compose ps
+                    docker compose ps
                     ;;
                 7)
                     cleanup

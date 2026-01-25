@@ -23,8 +23,8 @@ services:
   # Eureka Discovery Server
   discovery-server:
     build:
-      context: ./discovery-server
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: discovery-server/Dockerfile
     container_name: lms-discovery-server
     ports:
       - "8761:8761"
@@ -39,8 +39,8 @@ services:
   # API Gateway
   api-gateway:
     build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: api-gateway/Dockerfile
     container_name: lms-api-gateway
     ports:
       - "8080:8080"
@@ -61,8 +61,8 @@ services:
   # User Service
   user-service:
     build:
-      context: ./user-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: user-service/Dockerfile
     container_name: lms-user-service
     ports:
       - "8081:8081"
@@ -83,8 +83,8 @@ services:
   # Course Service
   course-service:
     build:
-      context: ./course-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: course-service/Dockerfile
     container_name: lms-course-service
     ports:
       - "8082:8082"
@@ -105,8 +105,8 @@ services:
   # Assessment Service
   assessment-service:
     build:
-      context: ./assessment-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: assessment-service/Dockerfile
     container_name: lms-assessment-service
     ports:
       - "8083:8083"
@@ -127,8 +127,8 @@ services:
   # Notification Service
   notification-service:
     build:
-      context: ./notification-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: notification-service/Dockerfile
     container_name: lms-notification-service
     ports:
       - "8084:8084"
@@ -149,8 +149,8 @@ services:
   # Attendance Service
   attendance-service:
     build:
-      context: ./attendance-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: attendance-service/Dockerfile
     container_name: lms-attendance-service
     ports:
       - "8085:8085"
@@ -171,8 +171,8 @@ services:
   # Leave Service
   leave-service:
     build:
-      context: ./leave-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: leave-service/Dockerfile
     container_name: lms-leave-service
     ports:
       - "8086:8086"

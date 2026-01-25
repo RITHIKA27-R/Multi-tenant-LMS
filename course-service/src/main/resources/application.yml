@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: course-service
+  main:
+    lazy-initialization: true
+    banner-mode: off
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC}
     username: ${SPRING_DATASOURCE_USERNAME:avnadmin}
@@ -31,3 +34,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.springframework.context.support: ERROR
+    org.springframework.cloud.loadbalancer: ERROR
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"

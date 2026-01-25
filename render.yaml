@@ -42,11 +42,11 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC
+        value: "jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC"
       - key: SPRING_DATASOURCE_USERNAME
-        value: avnadmin
+        value: "avnadmin"
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${SPRING_DATASOURCE_PASSWORD}
+        value: "${SPRING_DATASOURCE_PASSWORD}"
       - key: EUREKA_SERVER_URL
         value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
@@ -67,15 +67,17 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC
+        value: "jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC"
       - key: SPRING_DATASOURCE_USERNAME
-        value: avnadmin
+        value: "avnadmin"
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${SPRING_DATASOURCE_PASSWORD}
+        value: "${SPRING_DATASOURCE_PASSWORD}"
       - key: EUREKA_SERVER_URL
         value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
+      - key: JWT_SECRET
+        value: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
 
   # Assessment Service
   - type: web
@@ -88,15 +90,17 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC
+        value: "jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC"
       - key: SPRING_DATASOURCE_USERNAME
-        value: avnadmin
+        value: "avnadmin"
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${SPRING_DATASOURCE_PASSWORD}
+        value: "${SPRING_DATASOURCE_PASSWORD}"
       - key: EUREKA_SERVER_URL
         value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
+      - key: JWT_SECRET
+        value: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
 
   # Notification Service
   - type: web
@@ -109,15 +113,17 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC
+        value: "jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC"
       - key: SPRING_DATASOURCE_USERNAME
-        value: avnadmin
+        value: "avnadmin"
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${SPRING_DATASOURCE_PASSWORD}
+        value: "${SPRING_DATASOURCE_PASSWORD}"
       - key: EUREKA_SERVER_URL
         value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
+      - key: JWT_SECRET
+        value: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
 
   # Attendance Service
   - type: web
@@ -130,15 +136,17 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC
+        value: "jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC"
       - key: SPRING_DATASOURCE_USERNAME
-        value: avnadmin
+        value: "avnadmin"
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${SPRING_DATASOURCE_PASSWORD}
+        value: "${SPRING_DATASOURCE_PASSWORD}"
       - key: EUREKA_SERVER_URL
         value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
+      - key: JWT_SECRET
+        value: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
 
   # Leave Service
   - type: web
@@ -151,15 +159,17 @@ services:
       - key: PORT
         value: 10000
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC
+        value: "jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC"
       - key: SPRING_DATASOURCE_USERNAME
-        value: avnadmin
+        value: "avnadmin"
       - key: SPRING_DATASOURCE_PASSWORD
-        value: ${SPRING_DATASOURCE_PASSWORD}
+        value: "${SPRING_DATASOURCE_PASSWORD}"
       - key: EUREKA_SERVER_URL
         value: https://discovery-service-nb5s.onrender.com/eureka/
       - key: SPRING_PROFILES_ACTIVE
         value: docker
+      - key: JWT_SECRET
+        value: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
 
   # Frontend React App (Static Site)
   - type: web
@@ -168,7 +178,7 @@ services:
     rootDir: frontend-react
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    # plan: free
+    # plan: free  
     routes:
       - type: rewrite
         source: /*

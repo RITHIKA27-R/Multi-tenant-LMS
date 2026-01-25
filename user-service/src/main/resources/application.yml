@@ -4,10 +4,13 @@ server:
 spring:
   application:
     name: user-service
+  main:
+    lazy-initialization: true
+    banner-mode: off
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC}
-    username: ${SPRING_DATASOURCE_USERNAME:avnadmin}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: "${SPRING_DATASOURCE_URL:jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC}"
+    username: "${SPRING_DATASOURCE_USERNAME:avnadmin}"
+    password: "${SPRING_DATASOURCE_PASSWORD:}"
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
     host: smtp.gmail.com
@@ -50,6 +53,13 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.springframework.context.support: ERROR
+    org.springframework.cloud.loadbalancer: ERROR
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
 
 jwt:
   secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970

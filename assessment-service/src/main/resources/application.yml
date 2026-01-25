@@ -4,13 +4,16 @@ server:
 spring:
   application:
     name: assessment-service
+  main:
+    lazy-initialization: true
+    banner-mode: off
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://mysql-283ef25f-multi-tenant-lms.j.aivencloud.com:18511/defaultdb?sslMode=REQUIRED&createDatabaseIfNotExist=true&serverTimezone=UTC}
-    username: ${SPRING_DATASOURCE_USERNAME:avnadmin}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: "${SPRING_DATASOURCE_URL}"
+    username: "${SPRING_DATASOURCE_USERNAME}"
+    password: "${SPRING_DATASOURCE_PASSWORD}"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -19,9 +22,15 @@ spring:
         format_sql: true
 
 eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+    instance-id: ${spring.application.name}:${RENDER_INSTANCE_ID:${random.value}}
   client:
     service-url:
       defaultZone: ${EUREKA_SERVER_URL:https://discovery-service-nb5s.onrender.com/eureka/}
+    registry-fetch-interval-seconds: 10
 
 management:
   endpoints:
@@ -32,5 +41,12 @@ management:
     health:
       show-details: always
 
+logging:
+  level:
+    org.springframework.context.support: ERROR
+    org.springframework.cloud.loadbalancer: ERROR
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
+
 jwt:
-  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}

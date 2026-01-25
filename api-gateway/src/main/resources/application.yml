@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: api-gateway
+  main:
+    lazy-initialization: true
+    banner-mode: off
 
   cloud:
     gateway:
@@ -100,14 +103,20 @@ spring:
             - AuthenticationFilter
 
 jwt:
-  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  secret: "${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}"
 
 eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+    instance-id: ${spring.application.name}:${RENDER_INSTANCE_ID:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: ${EUREKA_SERVER_URL:https://discovery-service-nb5s.onrender.com/eureka/}
+    registry-fetch-interval-seconds: 10
 
 management:
   endpoints:
@@ -117,3 +126,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.springframework.context.support: ERROR
+    org.springframework.cloud.loadbalancer: ERROR
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
